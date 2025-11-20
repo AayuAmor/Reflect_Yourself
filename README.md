@@ -5,6 +5,7 @@ A beautiful daily reflection and gratitude journal web application with dual cal
 ## Features
 
 ### 📅 Dual Calendar System
+
 - **AD Calendar**: Standard Gregorian calendar
 - **Nepali Calendar**: Bikram Sambat (BS) calendar with accurate conversion
 - Month navigation for both calendars
@@ -13,6 +14,7 @@ A beautiful daily reflection and gratitude journal web application with dual cal
 ### 📝 Daily Reflection Questions
 
 #### ☀️ Morning Questions (7 questions)
+
 1. What is the main task today?
 2. What am I going to give myself today?
 3. What am I going to give others today?
@@ -22,6 +24,7 @@ A beautiful daily reflection and gratitude journal web application with dual cal
 7. How can I increase my productivity today?
 
 #### 🌙 Evening Questions (5 questions)
+
 1. What did I do today to move closer to my aim or goal?
 2. Did my actions reflect my priorities or excuses?
 3. Where did I waste my energy or get distracted?
@@ -29,12 +32,14 @@ A beautiful daily reflection and gratitude journal web application with dual cal
 5. Where am I winning in my life?
 
 ### 📊 Progress Tracking
+
 - **🟢 Green**: Complete (both morning and evening answered)
 - **🟡 Yellow**: Partial (only one session answered)
 - **🔴 Red**: Incomplete (missed day)
 - **🔵 Blue**: Today's date
 
 ### 💾 Data Persistence
+
 - All answers saved in browser localStorage
 - No server required - completely offline capable
 - View and edit past entries anytime
@@ -59,6 +64,7 @@ A beautiful daily reflection and gratitude journal web application with dual cal
 ## Browser Support
 
 Works on all modern browsers:
+
 - Chrome/Edge (recommended)
 - Firefox
 - Safari
@@ -67,6 +73,7 @@ Works on all modern browsers:
 ## Installation
 
 No installation required! Simply:
+
 1. Download or clone this repository
 2. Open `index.html` in your browser
 3. Start reflecting!
@@ -74,6 +81,7 @@ No installation required! Simply:
 ## Responsive Design
 
 Fully responsive design works on:
+
 - 💻 Desktop computers
 - 📱 Tablets
 - 📱 Mobile phones

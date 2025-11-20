@@ -7,6 +7,7 @@ Thank you for your interest in contributing to Reflect Yourself! 🌟
 ### Reporting Bugs 🐛
 
 If you find a bug, please open an issue with:
+
 - Clear description of the problem
 - Steps to reproduce
 - Expected vs actual behavior
@@ -16,6 +17,7 @@ If you find a bug, please open an issue with:
 ### Suggesting Features 💡
 
 Feature requests are welcome! Please include:
+
 - Clear use case
 - Expected behavior
 - How it improves user experience
@@ -45,6 +47,7 @@ Feature requests are welcome! Please include:
 ## Commit Message Guidelines
 
 Use conventional commits:
+
 - `feat:` New feature
 - `fix:` Bug fix
 - `docs:` Documentation changes
@@ -54,6 +57,7 @@ Use conventional commits:
 - `chore:` Maintenance tasks
 
 Examples:
+
 ```
 feat: Add dark mode toggle
 fix: Correct Nepali date conversion for leap years
@@ -73,6 +77,7 @@ refactor: Simplify calendar rendering logic
 ## Testing Checklist
 
 Before submitting a PR:
+
 - [ ] Code runs without errors
 - [ ] Tested on Chrome, Firefox, Safari
 - [ ] Mobile responsive design verified
@@ -85,6 +90,7 @@ Before submitting a PR:
 ## Need Help?
 
 Feel free to:
+
 - Open an issue for questions
 - Ask for clarification on existing code
 - Request code review guidance
