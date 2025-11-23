@@ -338,6 +338,146 @@
         color: #004085;
       }
 
+      /* Dashboard Styles */
+      .nav-tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 30px;
+        border-bottom: 2px solid #e9ecef;
+        padding-bottom: 10px;
+      }
+
+      .nav-tab {
+        padding: 12px 30px;
+        border: none;
+        background: transparent;
+        color: #666;
+        font-size: 1.1em;
+        font-weight: bold;
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
+        transition: all 0.3s;
+      }
+
+      .nav-tab.active {
+        color: #000;
+        border-bottom-color: #000;
+      }
+
+      .nav-tab:hover {
+        color: #000;
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      .dashboard-container {
+        max-height: 600px;
+        overflow-y: auto;
+      }
+
+      .day-entry {
+        background: #f8f9fa;
+        border-left: 4px solid #000;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .day-entry.complete {
+        border-left-color: #28a745;
+      }
+
+      .day-entry.partial {
+        border-left-color: #ffc107;
+      }
+
+      .day-entry.incomplete {
+        border-left-color: #dc3545;
+      }
+
+      .day-entry-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #e9ecef;
+      }
+
+      .day-entry-date {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #000;
+      }
+
+      .day-entry-status {
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.9em;
+        font-weight: bold;
+        color: white;
+      }
+
+      .day-entry-status.complete {
+        background: #28a745;
+      }
+
+      .day-entry-status.partial {
+        background: #ffc107;
+      }
+
+      .day-entry-status.incomplete {
+        background: #dc3545;
+      }
+
+      .day-entry-section {
+        margin-bottom: 20px;
+      }
+
+      .section-title {
+        font-size: 1.1em;
+        font-weight: bold;
+        color: #000;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .answer-item {
+        background: white;
+        padding: 12px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+      }
+
+      .answer-question {
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 5px;
+        font-size: 0.95em;
+      }
+
+      .answer-text {
+        color: #333;
+        line-height: 1.6;
+        font-size: 0.95em;
+      }
+
+      .no-data {
+        text-align: center;
+        padding: 40px;
+        color: #999;
+        font-size: 1.1em;
+      }
+
       @media (max-width: 968px) {
         .calendars-section {
           grid-template-columns: 1fr;
@@ -359,6 +499,15 @@
         <h1>🌟 Reflect Yourself 🌟</h1>
         <p class="subtitle">Daily Reflection & Gratitude Journal</p>
       </header>
+
+      <!-- Navigation Tabs -->
+      <div class="nav-tabs">
+        <button class="nav-tab active" onclick="showTab('today')">📝 Today</button>
+        <button class="nav-tab" onclick="showTab('dashboard')">📊 Dashboard</button>
+      </div>
+
+      <!-- Today Tab Content -->
+      <div class="tab-content active" id="today-content">
 
       <!-- Quote of the Day -->
       <div class="quote-section">
@@ -422,10 +571,6 @@
 
       <!-- Questions Section -->
       <div class="questions-section">
-        <div class="selected-date-info" id="selected-date-info">
-          Select a date to answer questions
-        </div>
-
         <div class="questions-tabs">
           <button class="tab-btn active" onclick="switchTab('morning')">
             <span class="icon">☀️</span>
@@ -557,6 +702,15 @@
           <div class="status-message" id="evening-status"></div>
         </div>
       </div>
+      </div>
+      <!-- End Today Tab -->
+
+      <!-- Dashboard Tab Content -->
+      <div class="tab-content" id="dashboard-content">
+        <h2 style="margin-bottom: 20px; color: #000;">📊 Last 15 Days Reflections</h2>
+        <div class="dashboard-container" id="dashboard-container"></div>
+      </div>
+      <!-- End Dashboard Tab -->
     </div>
 
     <script>
@@ -734,16 +888,156 @@
       // State
       let currentADDate = new Date();
       let currentNepaliDate = adToNepali(currentADDate);
-      let selectedDate = null;
       let reflectionData =
         JSON.parse(localStorage.getItem("reflectionData")) || {};
+
+      // Get today's date key
+      function getTodayDateKey() {
+        const today = new Date();
+        return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+      }
 
       // Initialize
       function init() {
         displayQuoteOfTheDay();
         renderADCalendar();
         renderNepaliCalendar();
-        updateSelectedDateInfo();
+        loadTodayAnswers();
+      }
+
+      // Tab Navigation
+      function showTab(tabName) {
+        // Update tab buttons
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+          tab.classList.remove('active');
+        });
+        event.target.classList.add('active');
+
+        // Update tab content
+        document.querySelectorAll('.tab-content').forEach(content => {
+          content.classList.remove('active');
+        });
+        document.getElementById(`${tabName}-content`).classList.add('active');
+
+        // Load dashboard if switching to it
+        if (tabName === 'dashboard') {
+          renderDashboard();
+        }
+      }
+
+      // Render Dashboard
+      function renderDashboard() {
+        const container = document.getElementById('dashboard-container');
+        container.innerHTML = '';
+
+        const today = new Date();
+        const entries = [];
+
+        // Get last 15 days
+        for (let i = 0; i < 15; i++) {
+          const date = new Date(today);
+          date.setDate(date.getDate() - i);
+          const dateKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+          
+          const data = reflectionData[dateKey];
+          const hasMorning = data?.morning && Object.values(data.morning).some(v => v);
+          const hasEvening = data?.evening && Object.values(data.evening).some(v => v);
+          
+          let status = 'incomplete';
+          if (hasMorning && hasEvening) status = 'complete';
+          else if (hasMorning || hasEvening) status = 'partial';
+
+          entries.push({
+            date: date,
+            dateKey: dateKey,
+            data: data,
+            status: status,
+            hasMorning: hasMorning,
+            hasEvening: hasEvening
+          });
+        }
+
+        // Render entries
+        entries.forEach(entry => {
+          const entryDiv = document.createElement('div');
+          entryDiv.className = `day-entry ${entry.status}`;
+
+          const dateStr = entry.date.toLocaleDateString('en-US', { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+          });
+
+          const statusText = entry.status === 'complete' ? '✓ Complete' : 
+                            entry.status === 'partial' ? '◐ Partial' : '✗ Incomplete';
+
+          let html = `
+            <div class="day-entry-header">
+              <div class="day-entry-date">${dateStr}</div>
+              <div class="day-entry-status ${entry.status}">${statusText}</div>
+            </div>
+          `;
+
+          // Morning section
+          if (entry.hasMorning) {
+            html += '<div class="day-entry-section">';
+            html += '<div class="section-title">☀️ Morning Reflection</div>';
+            const morningQuestions = [
+              'What is the main task today?',
+              'What am I going to give myself today?',
+              'What am I going to give others today?',
+              'What am I happy about right now?',
+              'What are 10 things that I am grateful for in life?',
+              'For what and for whom am I grateful in life?',
+              'How can I increase my productivity today?'
+            ];
+            for (let i = 1; i <= 7; i++) {
+              const answer = entry.data.morning[`q${i}`];
+              if (answer) {
+                html += `
+                  <div class="answer-item">
+                    <div class="answer-question">${i}. ${morningQuestions[i-1]}</div>
+                    <div class="answer-text">${answer}</div>
+                  </div>
+                `;
+              }
+            }
+            html += '</div>';
+          }
+
+          // Evening section
+          if (entry.hasEvening) {
+            html += '<div class="day-entry-section">';
+            html += '<div class="section-title">🌙 Evening Reflection</div>';
+            const eveningQuestions = [
+              'What did I do today to move closer to my aim or goal?',
+              'Did my actions reflect my priorities or excuses?',
+              'Where did I waste my energy or get distracted?',
+              'If every day looked like today, would I hit my goal?',
+              'Where am I winning in my life?'
+            ];
+            for (let i = 1; i <= 5; i++) {
+              const answer = entry.data.evening[`q${i}`];
+              if (answer) {
+                html += `
+                  <div class="answer-item">
+                    <div class="answer-question">${i}. ${eveningQuestions[i-1]}</div>
+                    <div class="answer-text">${answer}</div>
+                  </div>
+                `;
+              }
+            }
+            html += '</div>';
+          }
+
+          if (!entry.hasMorning && !entry.hasEvening) {
+            html += '<div class="no-data">No reflections recorded for this day</div>';
+          }
+
+          entryDiv.innerHTML = html;
+          container.appendChild(entryDiv);
+        });
       }
 
       // AD Calendar
@@ -827,7 +1121,6 @@
             }
           }
 
-          day.onclick = () => selectDate(dateKey);
           calendar.appendChild(day);
         }
 
@@ -920,7 +1213,6 @@
             }
           }
 
-          day.onclick = () => selectDate(dateKey);
           calendar.appendChild(day);
         }
 
@@ -1014,35 +1306,6 @@
         }
       }
 
-      // Date selection
-      function selectDate(dateKey) {
-        selectedDate = dateKey;
-        updateSelectedDateInfo();
-        loadAnswers(dateKey);
-      }
-
-      function updateSelectedDateInfo() {
-        const info = document.getElementById("selected-date-info");
-        if (selectedDate) {
-          const date = new Date(selectedDate);
-          const options = {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          };
-          const nepaliDate = adToNepali(date);
-          info.textContent = `Selected: ${date.toLocaleDateString(
-            "en-US",
-            options
-          )} | ${nepaliMonths[nepaliDate.month]} ${nepaliDate.day}, ${
-            nepaliDate.year
-          }`;
-        } else {
-          info.textContent = "Select a date to answer questions";
-        }
-      }
-
       // Tab switching
       function switchTab(tab) {
         document
@@ -1056,8 +1319,9 @@
         document.getElementById(`${tab}-questions`).classList.add("active");
       }
 
-      // Load answers
-      function loadAnswers(dateKey) {
+      // Load today's answers
+      function loadTodayAnswers() {
+        const dateKey = getTodayDateKey();
         const data = reflectionData[dateKey] || {};
 
         // Load morning answers
@@ -1079,11 +1343,7 @@
 
       // Submit answers
       function submitAnswers(type) {
-        if (!selectedDate) {
-          alert("Please select a date first!");
-          return;
-        }
-
+        const dateKey = getTodayDateKey();
         const numQuestions = type === "morning" ? 7 : 5;
         const answers = {};
         let allFilled = true;
@@ -1104,11 +1364,11 @@
         }
 
         // Save to storage
-        if (!reflectionData[selectedDate]) {
-          reflectionData[selectedDate] = {};
+        if (!reflectionData[dateKey]) {
+          reflectionData[dateKey] = {};
         }
-        reflectionData[selectedDate][type] = answers;
-        reflectionData[selectedDate][`${type}Timestamp`] =
+        reflectionData[dateKey][type] = answers;
+        reflectionData[dateKey][`${type}Timestamp`] =
           new Date().toISOString();
 
         localStorage.setItem("reflectionData", JSON.stringify(reflectionData));
