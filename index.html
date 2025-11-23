@@ -669,6 +669,149 @@
         background: #333;
       }
 
+      /* Custom Alert/Confirm Styles */
+      .custom-alert-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .custom-alert-overlay.active {
+        display: flex;
+      }
+
+      .custom-alert-box {
+        background: white;
+        border-radius: 15px;
+        padding: 0;
+        min-width: 400px;
+        max-width: 500px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+        animation: slideDown 0.3s ease-out;
+      }
+
+      @keyframes slideDown {
+        from {
+          transform: translateY(-50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .custom-alert-header {
+        background: linear-gradient(135deg, #000 0%, #333 100%);
+        padding: 20px 25px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .custom-alert-header::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -10%;
+        width: 200px;
+        height: 200px;
+        background: rgba(220, 53, 69, 0.3);
+        border-radius: 50%;
+        transform: skew(-20deg);
+      }
+
+      .custom-alert-header::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, #dc3545 0%, #000 100%);
+      }
+
+      .custom-alert-icon {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .custom-alert-title {
+        color: white;
+        font-size: 1.3em;
+        font-weight: bold;
+        margin: 0;
+        position: relative;
+        z-index: 1;
+      }
+
+      .custom-alert-body {
+        padding: 30px 25px;
+        background: white;
+      }
+
+      .custom-alert-message {
+        color: #333;
+        font-size: 1.05em;
+        line-height: 1.6;
+        margin-bottom: 25px;
+      }
+
+      .custom-alert-buttons {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+      }
+
+      .custom-alert-btn {
+        padding: 12px 30px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1em;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+        min-width: 100px;
+      }
+
+      .custom-alert-btn-primary {
+        background: #000;
+        color: white;
+      }
+
+      .custom-alert-btn-primary:hover {
+        background: #333;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+
+      .custom-alert-btn-secondary {
+        background: #6c757d;
+        color: white;
+      }
+
+      .custom-alert-btn-secondary:hover {
+        background: #5a6268;
+      }
+
+      .custom-alert-btn-danger {
+        background: #dc3545;
+        color: white;
+      }
+
+      .custom-alert-btn-danger:hover {
+        background: #c82333;
+      }
+
       @media (max-width: 968px) {
         .calendars-section {
           grid-template-columns: 1fr;
@@ -975,7 +1118,103 @@
       </div>
     </div>
 
+    <!-- Custom Alert/Confirm Modal -->
+    <div class="custom-alert-overlay" id="custom-alert">
+      <div class="custom-alert-box">
+        <div class="custom-alert-header">
+          <div class="custom-alert-icon" id="alert-icon">ℹ️</div>
+          <h3 class="custom-alert-title" id="alert-title">Notification</h3>
+        </div>
+        <div class="custom-alert-body">
+          <div class="custom-alert-message" id="alert-message"></div>
+          <div class="custom-alert-buttons" id="alert-buttons"></div>
+        </div>
+      </div>
+    </div>
+
     <script>
+      // Custom Alert System
+      function customAlert(message, title = "Notification", icon = "ℹ️") {
+        return new Promise((resolve) => {
+          const overlay = document.getElementById("custom-alert");
+          const iconEl = document.getElementById("alert-icon");
+          const titleEl = document.getElementById("alert-title");
+          const messageEl = document.getElementById("alert-message");
+          const buttonsEl = document.getElementById("alert-buttons");
+
+          iconEl.textContent = icon;
+          titleEl.textContent = title;
+          messageEl.textContent = message;
+
+          buttonsEl.innerHTML = `
+            <button class="custom-alert-btn custom-alert-btn-primary" onclick="closeCustomAlert(true)">OK</button>
+          `;
+
+          overlay.classList.add("active");
+
+          window.customAlertResolve = resolve;
+        });
+      }
+
+      function customConfirm(message, title = "Confirm", icon = "❓") {
+        return new Promise((resolve) => {
+          const overlay = document.getElementById("custom-alert");
+          const iconEl = document.getElementById("alert-icon");
+          const titleEl = document.getElementById("alert-title");
+          const messageEl = document.getElementById("alert-message");
+          const buttonsEl = document.getElementById("alert-buttons");
+
+          iconEl.textContent = icon;
+          titleEl.textContent = title;
+          messageEl.textContent = message;
+
+          buttonsEl.innerHTML = `
+            <button class="custom-alert-btn custom-alert-btn-secondary" onclick="closeCustomAlert(false)">Cancel</button>
+            <button class="custom-alert-btn custom-alert-btn-primary" onclick="closeCustomAlert(true)">OK</button>
+          `;
+
+          overlay.classList.add("active");
+
+          window.customAlertResolve = resolve;
+        });
+      }
+
+      function customDeleteConfirm(
+        message,
+        title = "Delete Confirmation",
+        icon = "🗑️"
+      ) {
+        return new Promise((resolve) => {
+          const overlay = document.getElementById("custom-alert");
+          const iconEl = document.getElementById("alert-icon");
+          const titleEl = document.getElementById("alert-title");
+          const messageEl = document.getElementById("alert-message");
+          const buttonsEl = document.getElementById("alert-buttons");
+
+          iconEl.textContent = icon;
+          titleEl.textContent = title;
+          messageEl.textContent = message;
+
+          buttonsEl.innerHTML = `
+            <button class="custom-alert-btn custom-alert-btn-secondary" onclick="closeCustomAlert(false)">Cancel</button>
+            <button class="custom-alert-btn custom-alert-btn-danger" onclick="closeCustomAlert(true)">Delete</button>
+          `;
+
+          overlay.classList.add("active");
+
+          window.customAlertResolve = resolve;
+        });
+      }
+
+      function closeCustomAlert(result) {
+        const overlay = document.getElementById("custom-alert");
+        overlay.classList.remove("active");
+        if (window.customAlertResolve) {
+          window.customAlertResolve(result);
+          window.customAlertResolve = null;
+        }
+      }
+
       // Quote of the Day Database
       const quotes = [
         {
@@ -1624,7 +1863,7 @@
       }
 
       // Submit answers
-      function submitAnswers(type) {
+      async function submitAnswers(type) {
         const dateKey = getTodayDateKey();
         const numQuestions = type === "morning" ? 7 : 5;
         const answers = {};
@@ -1639,8 +1878,10 @@
         }
 
         if (!allFilled) {
-          const confirmed = confirm(
-            "Some questions are not answered. Do you want to save anyway?"
+          const confirmed = await customConfirm(
+            "Some questions are not answered. Do you want to save anyway?",
+            "Incomplete Answers",
+            "⚠️"
           );
           if (!confirmed) return;
         }
