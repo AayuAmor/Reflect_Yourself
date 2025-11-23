@@ -502,212 +502,223 @@
 
       <!-- Navigation Tabs -->
       <div class="nav-tabs">
-        <button class="nav-tab active" onclick="showTab('today')">📝 Today</button>
-        <button class="nav-tab" onclick="showTab('dashboard')">📊 Dashboard</button>
+        <button class="nav-tab active" onclick="showTab('today')">
+          📝 Today
+        </button>
+        <button class="nav-tab" onclick="showTab('dashboard')">
+          📊 Dashboard
+        </button>
       </div>
 
       <!-- Today Tab Content -->
       <div class="tab-content active" id="today-content">
-
-      <!-- Quote of the Day -->
-      <div class="quote-section">
-        <div class="quote-title">✨ Quote of the Day ✨</div>
-        <div class="quote-text" id="quote-text"></div>
-        <div class="quote-author" id="quote-author"></div>
-      </div>
-
-      <!-- Calendars Section -->
-      <div class="calendars-section">
-        <!-- AD Calendar -->
-        <div class="calendar-container">
-          <div class="calendar-header">
-            <h2 class="calendar-title">📅 AD Calendar</h2>
-            <div class="calendar-nav">
-              <button class="nav-btn" onclick="changeMonth('ad', -1)">◀</button>
-              <span class="month-year" id="ad-month-year"></span>
-              <button class="nav-btn" onclick="changeMonth('ad', 1)">▶</button>
-            </div>
-          </div>
-          <div class="calendar" id="ad-calendar"></div>
+        <!-- Quote of the Day -->
+        <div class="quote-section">
+          <div class="quote-title">✨ Quote of the Day ✨</div>
+          <div class="quote-text" id="quote-text"></div>
+          <div class="quote-author" id="quote-author"></div>
         </div>
 
-        <!-- Nepali Calendar -->
-        <div class="calendar-container">
-          <div class="calendar-header">
-            <h2 class="calendar-title">🗓️ Nepali Calendar</h2>
-            <div class="calendar-nav">
-              <button class="nav-btn" onclick="changeMonth('nepali', -1)">
-                ◀
-              </button>
-              <span class="month-year" id="nepali-month-year"></span>
-              <button class="nav-btn" onclick="changeMonth('nepali', 1)">
-                ▶
-              </button>
+        <!-- Calendars Section -->
+        <div class="calendars-section">
+          <!-- AD Calendar -->
+          <div class="calendar-container">
+            <div class="calendar-header">
+              <h2 class="calendar-title">📅 AD Calendar</h2>
+              <div class="calendar-nav">
+                <button class="nav-btn" onclick="changeMonth('ad', -1)">
+                  ◀
+                </button>
+                <span class="month-year" id="ad-month-year"></span>
+                <button class="nav-btn" onclick="changeMonth('ad', 1)">
+                  ▶
+                </button>
+              </div>
             </div>
+            <div class="calendar" id="ad-calendar"></div>
           </div>
-          <div class="calendar" id="nepali-calendar"></div>
-        </div>
-      </div>
 
-      <!-- Legend -->
-      <div class="legend">
-        <div class="legend-item">
-          <div class="legend-color" style="background: #28a745"></div>
-          <span>Complete (Both)</span>
-        </div>
-        <div class="legend-item">
-          <div class="legend-color" style="background: #ffc107"></div>
-          <span>Partial (One)</span>
-        </div>
-        <div class="legend-item">
-          <div class="legend-color" style="background: #dc3545"></div>
-          <span>Incomplete</span>
-        </div>
-        <div class="legend-item">
-          <div class="legend-color" style="background: #000"></div>
-          <span>Today</span>
-        </div>
-      </div>
-
-      <!-- Questions Section -->
-      <div class="questions-section">
-        <div class="questions-tabs">
-          <button class="tab-btn active" onclick="switchTab('morning')">
-            <span class="icon">☀️</span>
-            Morning Questions
-          </button>
-          <button class="tab-btn" onclick="switchTab('evening')">
-            <span class="icon">🌙</span>
-            Evening Questions
-          </button>
+          <!-- Nepali Calendar -->
+          <div class="calendar-container">
+            <div class="calendar-header">
+              <h2 class="calendar-title">🗓️ Nepali Calendar</h2>
+              <div class="calendar-nav">
+                <button class="nav-btn" onclick="changeMonth('nepali', -1)">
+                  ◀
+                </button>
+                <span class="month-year" id="nepali-month-year"></span>
+                <button class="nav-btn" onclick="changeMonth('nepali', 1)">
+                  ▶
+                </button>
+              </div>
+            </div>
+            <div class="calendar" id="nepali-calendar"></div>
+          </div>
         </div>
 
-        <!-- Morning Questions -->
-        <div class="questions-content active" id="morning-questions">
-          <div class="question-card">
-            <div class="question-label">1. What is the main task today?</div>
-            <textarea
-              id="morning-q1"
-              placeholder="Write your answer here..."
-            ></textarea>
+        <!-- Legend -->
+        <div class="legend">
+          <div class="legend-item">
+            <div class="legend-color" style="background: #28a745"></div>
+            <span>Complete (Both)</span>
           </div>
-          <div class="question-card">
-            <div class="question-label">
-              2. What am I going to give myself today?
-            </div>
-            <textarea
-              id="morning-q2"
-              placeholder="Write your answer here..."
-            ></textarea>
+          <div class="legend-item">
+            <div class="legend-color" style="background: #ffc107"></div>
+            <span>Partial (One)</span>
           </div>
-          <div class="question-card">
-            <div class="question-label">
-              3. What am I going to give others today?
-            </div>
-            <textarea
-              id="morning-q3"
-              placeholder="Write your answer here..."
-            ></textarea>
+          <div class="legend-item">
+            <div class="legend-color" style="background: #dc3545"></div>
+            <span>Incomplete</span>
           </div>
-          <div class="question-card">
-            <div class="question-label">
-              4. What am I happy about right now?
-            </div>
-            <textarea
-              id="morning-q4"
-              placeholder="Write your answer here..."
-            ></textarea>
+          <div class="legend-item">
+            <div class="legend-color" style="background: #000"></div>
+            <span>Today</span>
           </div>
-          <div class="question-card">
-            <div class="question-label">
-              5. What are 10 things that I am grateful for in life?
-            </div>
-            <textarea
-              id="morning-q5"
-              placeholder="Write your answer here..."
-            ></textarea>
-          </div>
-          <div class="question-card">
-            <div class="question-label">
-              6. For what and for whom am I grateful in life?
-            </div>
-            <textarea
-              id="morning-q6"
-              placeholder="Write your answer here..."
-            ></textarea>
-          </div>
-          <div class="question-card">
-            <div class="question-label">
-              7. How can I increase my productivity today?
-            </div>
-            <textarea
-              id="morning-q7"
-              placeholder="Write your answer here..."
-            ></textarea>
-          </div>
-          <button class="submit-btn" onclick="submitAnswers('morning')">
-            Submit Morning Reflection
-          </button>
-          <div class="status-message" id="morning-status"></div>
         </div>
 
-        <!-- Evening Questions -->
-        <div class="questions-content" id="evening-questions">
-          <div class="question-card">
-            <div class="question-label">
-              1. What did I do today to move closer to my aim or goal?
+        <!-- Questions Section -->
+        <div class="questions-section">
+          <div class="questions-tabs">
+            <button class="tab-btn active" onclick="switchTab('morning')">
+              <span class="icon">☀️</span>
+              Morning Questions
+            </button>
+            <button class="tab-btn" onclick="switchTab('evening')">
+              <span class="icon">🌙</span>
+              Evening Questions
+            </button>
+          </div>
+
+          <!-- Morning Questions -->
+          <div class="questions-content active" id="morning-questions">
+            <div class="question-card">
+              <div class="question-label">1. What is the main task today?</div>
+              <textarea
+                id="morning-q1"
+                placeholder="Write your answer here..."
+              ></textarea>
             </div>
-            <textarea
-              id="evening-q1"
-              placeholder="Write your answer here..."
-            ></textarea>
-          </div>
-          <div class="question-card">
-            <div class="question-label">
-              2. Did my actions reflect my priorities or excuses?
+            <div class="question-card">
+              <div class="question-label">
+                2. What am I going to give myself today?
+              </div>
+              <textarea
+                id="morning-q2"
+                placeholder="Write your answer here..."
+              ></textarea>
             </div>
-            <textarea
-              id="evening-q2"
-              placeholder="Write your answer here..."
-            ></textarea>
-          </div>
-          <div class="question-card">
-            <div class="question-label">
-              3. Where did I waste my energy or get distracted?
+            <div class="question-card">
+              <div class="question-label">
+                3. What am I going to give others today?
+              </div>
+              <textarea
+                id="morning-q3"
+                placeholder="Write your answer here..."
+              ></textarea>
             </div>
-            <textarea
-              id="evening-q3"
-              placeholder="Write your answer here..."
-            ></textarea>
-          </div>
-          <div class="question-card">
-            <div class="question-label">
-              4. If every day looked like today, would I hit my goal?
+            <div class="question-card">
+              <div class="question-label">
+                4. What am I happy about right now?
+              </div>
+              <textarea
+                id="morning-q4"
+                placeholder="Write your answer here..."
+              ></textarea>
             </div>
-            <textarea
-              id="evening-q4"
-              placeholder="Write your answer here..."
-            ></textarea>
+            <div class="question-card">
+              <div class="question-label">
+                5. What are 10 things that I am grateful for in life?
+              </div>
+              <textarea
+                id="morning-q5"
+                placeholder="Write your answer here..."
+              ></textarea>
+            </div>
+            <div class="question-card">
+              <div class="question-label">
+                6. For what and for whom am I grateful in life?
+              </div>
+              <textarea
+                id="morning-q6"
+                placeholder="Write your answer here..."
+              ></textarea>
+            </div>
+            <div class="question-card">
+              <div class="question-label">
+                7. How can I increase my productivity today?
+              </div>
+              <textarea
+                id="morning-q7"
+                placeholder="Write your answer here..."
+              ></textarea>
+            </div>
+            <button class="submit-btn" onclick="submitAnswers('morning')">
+              Submit Morning Reflection
+            </button>
+            <div class="status-message" id="morning-status"></div>
           </div>
-          <div class="question-card">
-            <div class="question-label">5. Where am I winning in my life?</div>
-            <textarea
-              id="evening-q5"
-              placeholder="Write your answer here..."
-            ></textarea>
+
+          <!-- Evening Questions -->
+          <div class="questions-content" id="evening-questions">
+            <div class="question-card">
+              <div class="question-label">
+                1. What did I do today to move closer to my aim or goal?
+              </div>
+              <textarea
+                id="evening-q1"
+                placeholder="Write your answer here..."
+              ></textarea>
+            </div>
+            <div class="question-card">
+              <div class="question-label">
+                2. Did my actions reflect my priorities or excuses?
+              </div>
+              <textarea
+                id="evening-q2"
+                placeholder="Write your answer here..."
+              ></textarea>
+            </div>
+            <div class="question-card">
+              <div class="question-label">
+                3. Where did I waste my energy or get distracted?
+              </div>
+              <textarea
+                id="evening-q3"
+                placeholder="Write your answer here..."
+              ></textarea>
+            </div>
+            <div class="question-card">
+              <div class="question-label">
+                4. If every day looked like today, would I hit my goal?
+              </div>
+              <textarea
+                id="evening-q4"
+                placeholder="Write your answer here..."
+              ></textarea>
+            </div>
+            <div class="question-card">
+              <div class="question-label">
+                5. Where am I winning in my life?
+              </div>
+              <textarea
+                id="evening-q5"
+                placeholder="Write your answer here..."
+              ></textarea>
+            </div>
+            <button class="submit-btn" onclick="submitAnswers('evening')">
+              Submit Evening Reflection
+            </button>
+            <div class="status-message" id="evening-status"></div>
           </div>
-          <button class="submit-btn" onclick="submitAnswers('evening')">
-            Submit Evening Reflection
-          </button>
-          <div class="status-message" id="evening-status"></div>
         </div>
-      </div>
       </div>
       <!-- End Today Tab -->
 
       <!-- Dashboard Tab Content -->
       <div class="tab-content" id="dashboard-content">
-        <h2 style="margin-bottom: 20px; color: #000;">📊 Last 15 Days Reflections</h2>
+        <h2 style="margin-bottom: 20px; color: #000">
+          📊 Last 15 Days Reflections
+        </h2>
         <div class="dashboard-container" id="dashboard-container"></div>
       </div>
       <!-- End Dashboard Tab -->
@@ -894,7 +905,10 @@
       // Get today's date key
       function getTodayDateKey() {
         const today = new Date();
-        return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+        return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(
+          2,
+          "0"
+        )}-${String(today.getDate()).padStart(2, "0")}`;
       }
 
       // Initialize
@@ -908,27 +922,27 @@
       // Tab Navigation
       function showTab(tabName) {
         // Update tab buttons
-        document.querySelectorAll('.nav-tab').forEach(tab => {
-          tab.classList.remove('active');
+        document.querySelectorAll(".nav-tab").forEach((tab) => {
+          tab.classList.remove("active");
         });
-        event.target.classList.add('active');
+        event.target.classList.add("active");
 
         // Update tab content
-        document.querySelectorAll('.tab-content').forEach(content => {
-          content.classList.remove('active');
+        document.querySelectorAll(".tab-content").forEach((content) => {
+          content.classList.remove("active");
         });
-        document.getElementById(`${tabName}-content`).classList.add('active');
+        document.getElementById(`${tabName}-content`).classList.add("active");
 
         // Load dashboard if switching to it
-        if (tabName === 'dashboard') {
+        if (tabName === "dashboard") {
           renderDashboard();
         }
       }
 
       // Render Dashboard
       function renderDashboard() {
-        const container = document.getElementById('dashboard-container');
-        container.innerHTML = '';
+        const container = document.getElementById("dashboard-container");
+        container.innerHTML = "";
 
         const today = new Date();
         const entries = [];
@@ -937,15 +951,19 @@
         for (let i = 0; i < 15; i++) {
           const date = new Date(today);
           date.setDate(date.getDate() - i);
-          const dateKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-          
+          const dateKey = `${date.getFullYear()}-${String(
+            date.getMonth() + 1
+          ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+
           const data = reflectionData[dateKey];
-          const hasMorning = data?.morning && Object.values(data.morning).some(v => v);
-          const hasEvening = data?.evening && Object.values(data.evening).some(v => v);
-          
-          let status = 'incomplete';
-          if (hasMorning && hasEvening) status = 'complete';
-          else if (hasMorning || hasEvening) status = 'partial';
+          const hasMorning =
+            data?.morning && Object.values(data.morning).some((v) => v);
+          const hasEvening =
+            data?.evening && Object.values(data.evening).some((v) => v);
+
+          let status = "incomplete";
+          if (hasMorning && hasEvening) status = "complete";
+          else if (hasMorning || hasEvening) status = "partial";
 
           entries.push({
             date: date,
@@ -953,24 +971,28 @@
             data: data,
             status: status,
             hasMorning: hasMorning,
-            hasEvening: hasEvening
+            hasEvening: hasEvening,
           });
         }
 
         // Render entries
-        entries.forEach(entry => {
-          const entryDiv = document.createElement('div');
+        entries.forEach((entry) => {
+          const entryDiv = document.createElement("div");
           entryDiv.className = `day-entry ${entry.status}`;
 
-          const dateStr = entry.date.toLocaleDateString('en-US', { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
+          const dateStr = entry.date.toLocaleDateString("en-US", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
           });
 
-          const statusText = entry.status === 'complete' ? '✓ Complete' : 
-                            entry.status === 'partial' ? '◐ Partial' : '✗ Incomplete';
+          const statusText =
+            entry.status === "complete"
+              ? "✓ Complete"
+              : entry.status === "partial"
+              ? "◐ Partial"
+              : "✗ Incomplete";
 
           let html = `
             <div class="day-entry-header">
@@ -984,26 +1006,28 @@
             html += '<div class="day-entry-section">';
             html += '<div class="section-title">☀️ Morning Reflection</div>';
             const morningQuestions = [
-              'What is the main task today?',
-              'What am I going to give myself today?',
-              'What am I going to give others today?',
-              'What am I happy about right now?',
-              'What are 10 things that I am grateful for in life?',
-              'For what and for whom am I grateful in life?',
-              'How can I increase my productivity today?'
+              "What is the main task today?",
+              "What am I going to give myself today?",
+              "What am I going to give others today?",
+              "What am I happy about right now?",
+              "What are 10 things that I am grateful for in life?",
+              "For what and for whom am I grateful in life?",
+              "How can I increase my productivity today?",
             ];
             for (let i = 1; i <= 7; i++) {
               const answer = entry.data.morning[`q${i}`];
               if (answer) {
                 html += `
                   <div class="answer-item">
-                    <div class="answer-question">${i}. ${morningQuestions[i-1]}</div>
+                    <div class="answer-question">${i}. ${
+                  morningQuestions[i - 1]
+                }</div>
                     <div class="answer-text">${answer}</div>
                   </div>
                 `;
               }
             }
-            html += '</div>';
+            html += "</div>";
           }
 
           // Evening section
@@ -1011,28 +1035,31 @@
             html += '<div class="day-entry-section">';
             html += '<div class="section-title">🌙 Evening Reflection</div>';
             const eveningQuestions = [
-              'What did I do today to move closer to my aim or goal?',
-              'Did my actions reflect my priorities or excuses?',
-              'Where did I waste my energy or get distracted?',
-              'If every day looked like today, would I hit my goal?',
-              'Where am I winning in my life?'
+              "What did I do today to move closer to my aim or goal?",
+              "Did my actions reflect my priorities or excuses?",
+              "Where did I waste my energy or get distracted?",
+              "If every day looked like today, would I hit my goal?",
+              "Where am I winning in my life?",
             ];
             for (let i = 1; i <= 5; i++) {
               const answer = entry.data.evening[`q${i}`];
               if (answer) {
                 html += `
                   <div class="answer-item">
-                    <div class="answer-question">${i}. ${eveningQuestions[i-1]}</div>
+                    <div class="answer-question">${i}. ${
+                  eveningQuestions[i - 1]
+                }</div>
                     <div class="answer-text">${answer}</div>
                   </div>
                 `;
               }
             }
-            html += '</div>';
+            html += "</div>";
           }
 
           if (!entry.hasMorning && !entry.hasEvening) {
-            html += '<div class="no-data">No reflections recorded for this day</div>';
+            html +=
+              '<div class="no-data">No reflections recorded for this day</div>';
           }
 
           entryDiv.innerHTML = html;
@@ -1368,8 +1395,7 @@
           reflectionData[dateKey] = {};
         }
         reflectionData[dateKey][type] = answers;
-        reflectionData[dateKey][`${type}Timestamp`] =
-          new Date().toISOString();
+        reflectionData[dateKey][`${type}Timestamp`] = new Date().toISOString();
 
         localStorage.setItem("reflectionData", JSON.stringify(reflectionData));
 
