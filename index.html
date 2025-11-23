@@ -478,6 +478,197 @@
         font-size: 1.1em;
       }
 
+      /* Custom Questions Styles */
+      .custom-questions-manager {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 30px;
+      }
+
+      .custom-section-list {
+        margin-bottom: 20px;
+      }
+
+      .custom-section-item {
+        background: white;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        border-left: 4px solid #000;
+      }
+
+      .custom-section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .custom-section-title {
+        font-weight: bold;
+        font-size: 1.1em;
+        color: #000;
+      }
+
+      .custom-section-actions {
+        display: flex;
+        gap: 10px;
+      }
+
+      .btn-small {
+        padding: 5px 12px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 0.85em;
+        font-weight: bold;
+        transition: all 0.3s;
+      }
+
+      .btn-edit {
+        background: #000;
+        color: white;
+      }
+
+      .btn-edit:hover {
+        background: #333;
+      }
+
+      .btn-delete {
+        background: #dc3545;
+        color: white;
+      }
+
+      .btn-delete:hover {
+        background: #c82333;
+      }
+
+      .add-section-btn {
+        background: #000;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1em;
+        font-weight: bold;
+        transition: all 0.3s;
+      }
+
+      .add-section-btn:hover {
+        background: #333;
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+      }
+
+      .modal.active {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        max-width: 600px;
+        width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
+      }
+
+      .modal-header {
+        font-size: 1.5em;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #000;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 8px;
+        color: #333;
+      }
+
+      .form-input {
+        width: 100%;
+        padding: 10px;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        font-size: 1em;
+        font-family: inherit;
+      }
+
+      .form-input:focus {
+        outline: none;
+        border-color: #000;
+      }
+
+      .question-list {
+        margin-top: 15px;
+      }
+
+      .question-item {
+        background: #f8f9fa;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .modal-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        margin-top: 20px;
+      }
+
+      .btn-cancel {
+        background: #6c757d;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1em;
+      }
+
+      .btn-cancel:hover {
+        background: #5a6268;
+      }
+
+      .btn-save {
+        background: #000;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1em;
+        font-weight: bold;
+      }
+
+      .btn-save:hover {
+        background: #333;
+      }
+
       @media (max-width: 968px) {
         .calendars-section {
           grid-template-columns: 1fr;
@@ -507,6 +698,9 @@
         </button>
         <button class="nav-tab" onclick="showTab('dashboard')">
           📊 Dashboard
+        </button>
+        <button class="nav-tab" onclick="showTab('custom')">
+          ⚙️ Custom Questions
         </button>
       </div>
 
@@ -722,6 +916,63 @@
         <div class="dashboard-container" id="dashboard-container"></div>
       </div>
       <!-- End Dashboard Tab -->
+
+      <!-- Custom Questions Tab Content -->
+      <div class="tab-content" id="custom-content">
+        <h2 style="margin-bottom: 20px; color: #000">
+          ⚙️ Manage Custom Question Sets
+        </h2>
+        <div class="custom-questions-manager">
+          <div class="custom-section-list" id="custom-section-list"></div>
+          <button class="add-section-btn" onclick="openAddSectionModal()">
+            + Add New Question Set
+          </button>
+        </div>
+      </div>
+      <!-- End Custom Questions Tab -->
+    </div>
+
+    <!-- Modal for Adding/Editing Custom Questions -->
+    <div class="modal" id="custom-modal">
+      <div class="modal-content">
+        <div class="modal-header" id="modal-title">Add New Question Set</div>
+        <div class="form-group">
+          <label class="form-label"
+            >Section Title (e.g., Morning, Evening, Weekly Review)</label
+          >
+          <input
+            type="text"
+            class="form-input"
+            id="section-title"
+            placeholder="Enter section title"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Section Icon (emoji)</label>
+          <input
+            type="text"
+            class="form-input"
+            id="section-icon"
+            placeholder="e.g., ☀️, 🌙, 📝"
+            maxlength="2"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Questions</label>
+          <div class="question-list" id="question-list"></div>
+          <button
+            class="add-section-btn"
+            style="margin-top: 10px; padding: 8px 15px; font-size: 0.9em"
+            onclick="addQuestionField()"
+          >
+            + Add Question
+          </button>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+          <button class="btn-save" onclick="saveCustomSection()">Save</button>
+        </div>
+      </div>
     </div>
 
     <script>
@@ -901,6 +1152,9 @@
       let currentNepaliDate = adToNepali(currentADDate);
       let reflectionData =
         JSON.parse(localStorage.getItem("reflectionData")) || {};
+      let customQuestions =
+        JSON.parse(localStorage.getItem("customQuestions")) || [];
+      let editingIndex = -1;
 
       // Get today's date key
       function getTodayDateKey() {
@@ -917,6 +1171,7 @@
         renderADCalendar();
         renderNepaliCalendar();
         loadTodayAnswers();
+        renderCustomQuestionSets();
       }
 
       // Tab Navigation
@@ -1429,6 +1684,462 @@
         if (hasMorning && hasEvening) return "complete";
         if (hasMorning || hasEvening) return "partial";
         return null;
+      }
+
+      // Custom Questions Management
+      function renderCustomQuestionSets() {
+        const container = document.getElementById("custom-section-list");
+        container.innerHTML = "";
+
+        if (customQuestions.length === 0) {
+          container.innerHTML =
+            '<div class="no-data">No custom question sets yet. Add one to get started!</div>';
+          return;
+        }
+
+        customQuestions.forEach((section, index) => {
+          const sectionDiv = document.createElement("div");
+          sectionDiv.className = "custom-section-item";
+          sectionDiv.innerHTML = `
+            <div class="custom-section-header">
+              <div class="custom-section-title">${section.icon} ${
+            section.title
+          } (${section.questions.length} questions)</div>
+              <div class="custom-section-actions">
+                <button class="btn-small btn-edit" onclick="editSection(${index})">Edit</button>
+                <button class="btn-small btn-delete" onclick="deleteSection(${index})">Delete</button>
+              </div>
+            </div>
+            <div style="color: #666; font-size: 0.9em;">
+              ${section.questions.map((q, i) => `${i + 1}. ${q}`).join("<br>")}
+            </div>
+          `;
+          container.appendChild(sectionDiv);
+        });
+      }
+
+      function openAddSectionModal() {
+        editingIndex = -1;
+        document.getElementById("modal-title").textContent =
+          "Add New Question Set";
+        document.getElementById("section-title").value = "";
+        document.getElementById("section-icon").value = "";
+        document.getElementById("question-list").innerHTML = "";
+        addQuestionField();
+        document.getElementById("custom-modal").classList.add("active");
+      }
+
+      function editSection(index) {
+        editingIndex = index;
+        const section = customQuestions[index];
+        document.getElementById("modal-title").textContent =
+          "Edit Question Set";
+        document.getElementById("section-title").value = section.title;
+        document.getElementById("section-icon").value = section.icon;
+
+        const questionList = document.getElementById("question-list");
+        questionList.innerHTML = "";
+        section.questions.forEach((q) => addQuestionField(q));
+
+        document.getElementById("custom-modal").classList.add("active");
+      }
+
+      function deleteSection(index) {
+        if (confirm("Are you sure you want to delete this question set?")) {
+          customQuestions.splice(index, 1);
+          localStorage.setItem(
+            "customQuestions",
+            JSON.stringify(customQuestions)
+          );
+          renderCustomQuestionSets();
+          renderCustomQuestions();
+        }
+      }
+
+      function addQuestionField(value = "") {
+        const questionList = document.getElementById("question-list");
+        const questionDiv = document.createElement("div");
+        questionDiv.className = "question-item";
+        questionDiv.innerHTML = `
+          <input type="text" class="form-input" placeholder="Enter question" value="${value}" style="flex: 1; margin-right: 10px;">
+          <button class="btn-small btn-delete" onclick="this.parentElement.remove()">Remove</button>
+        `;
+        questionList.appendChild(questionDiv);
+      }
+
+      function closeModal() {
+        document.getElementById("custom-modal").classList.remove("active");
+      }
+
+      function saveCustomSection() {
+        const title = document.getElementById("section-title").value.trim();
+        const icon =
+          document.getElementById("section-icon").value.trim() || "📝";
+        const questionInputs = document.querySelectorAll(
+          "#question-list input"
+        );
+        const questions = Array.from(questionInputs)
+          .map((input) => input.value.trim())
+          .filter((q) => q.length > 0);
+
+        if (!title) {
+          alert("Please enter a section title");
+          return;
+        }
+
+        if (questions.length === 0) {
+          alert("Please add at least one question");
+          return;
+        }
+
+        const section = { title, icon, questions };
+
+        if (editingIndex >= 0) {
+          customQuestions[editingIndex] = section;
+        } else {
+          customQuestions.push(section);
+        }
+
+        localStorage.setItem(
+          "customQuestions",
+          JSON.stringify(customQuestions)
+        );
+        closeModal();
+        renderCustomQuestionSets();
+        renderCustomQuestions();
+      }
+
+      function renderCustomQuestions() {
+        const questionsSection = document.querySelector(".questions-section");
+
+        // Remove existing custom sections
+        document
+          .querySelectorAll(".custom-questions-content")
+          .forEach((el) => el.remove());
+        document
+          .querySelectorAll(".custom-tab-btn")
+          .forEach((el) => el.remove());
+
+        if (customQuestions.length === 0) return;
+
+        // Add tabs for custom questions
+        const tabsContainer = document.querySelector(".questions-tabs");
+        customQuestions.forEach((section, index) => {
+          const tabBtn = document.createElement("button");
+          tabBtn.className = "tab-btn custom-tab-btn";
+          tabBtn.onclick = () => switchTab(`custom-${index}`);
+          tabBtn.innerHTML = `<span class="icon">${section.icon}</span>${section.title}`;
+          tabsContainer.appendChild(tabBtn);
+        });
+
+        // Add content for custom questions
+        customQuestions.forEach((section, index) => {
+          const contentDiv = document.createElement("div");
+          contentDiv.className = "questions-content custom-questions-content";
+          contentDiv.id = `custom-${index}-questions`;
+
+          let html = "";
+          section.questions.forEach((question, qIndex) => {
+            html += `
+              <div class="question-card">
+                <div class="question-label">${qIndex + 1}. ${question}</div>
+                <textarea id="custom-${index}-q${
+              qIndex + 1
+            }" placeholder="Write your answer here..."></textarea>
+              </div>
+            `;
+          });
+
+          html += `
+            <button class="submit-btn" onclick="submitCustomAnswers(${index})">
+              Submit ${section.title} Reflection
+            </button>
+            <div class="status-message" id="custom-${index}-status"></div>
+          `;
+
+          contentDiv.innerHTML = html;
+          questionsSection.appendChild(contentDiv);
+        });
+      }
+
+      function submitCustomAnswers(sectionIndex) {
+        const dateKey = getTodayDateKey();
+        const section = customQuestions[sectionIndex];
+        const answers = {};
+        let allFilled = true;
+
+        section.questions.forEach((q, qIndex) => {
+          const textarea = document.getElementById(
+            `custom-${sectionIndex}-q${qIndex + 1}`
+          );
+          answers[`q${qIndex + 1}`] = textarea.value.trim();
+          if (!answers[`q${qIndex + 1}`]) {
+            allFilled = false;
+          }
+        });
+
+        if (!allFilled) {
+          const confirmed = confirm(
+            "Some questions are not answered. Do you want to save anyway?"
+          );
+          if (!confirmed) return;
+        }
+
+        // Save to storage
+        if (!reflectionData[dateKey]) {
+          reflectionData[dateKey] = {};
+        }
+        reflectionData[dateKey][`custom_${sectionIndex}`] = answers;
+        reflectionData[dateKey][`custom_${sectionIndex}_timestamp`] =
+          new Date().toISOString();
+        reflectionData[dateKey][`custom_${sectionIndex}_title`] = section.title;
+        reflectionData[dateKey][`custom_${sectionIndex}_icon`] = section.icon;
+
+        localStorage.setItem("reflectionData", JSON.stringify(reflectionData));
+
+        // Show success message
+        const statusDiv = document.getElementById(
+          `custom-${sectionIndex}-status`
+        );
+        statusDiv.className = "status-message success";
+        statusDiv.textContent = `✓ ${section.title} reflection saved successfully!`;
+        statusDiv.style.display = "block";
+
+        setTimeout(() => {
+          statusDiv.style.display = "none";
+        }, 3000);
+
+        // Refresh calendars
+        renderADCalendar();
+        renderNepaliCalendar();
+      }
+
+      // Custom Questions Management
+      function renderCustomQuestionSets() {
+        const container = document.getElementById("custom-section-list");
+        container.innerHTML = "";
+
+        if (customQuestions.length === 0) {
+          container.innerHTML =
+            '<div class="no-data">No custom question sets yet. Add one to get started!</div>';
+          return;
+        }
+
+        customQuestions.forEach((section, index) => {
+          const sectionDiv = document.createElement("div");
+          sectionDiv.className = "custom-section-item";
+          sectionDiv.innerHTML = `
+            <div class="custom-section-header">
+              <div class="custom-section-title">${section.icon} ${
+            section.title
+          } (${section.questions.length} questions)</div>
+              <div class="custom-section-actions">
+                <button class="btn-small btn-edit" onclick="editSection(${index})">Edit</button>
+                <button class="btn-small btn-delete" onclick="deleteSection(${index})">Delete</button>
+              </div>
+            </div>
+            <div style="color: #666; font-size: 0.9em;">
+              ${section.questions.map((q, i) => `${i + 1}. ${q}`).join("<br>")}
+            </div>
+          `;
+          container.appendChild(sectionDiv);
+        });
+      }
+
+      function openAddSectionModal() {
+        editingIndex = -1;
+        document.getElementById("modal-title").textContent =
+          "Add New Question Set";
+        document.getElementById("section-title").value = "";
+        document.getElementById("section-icon").value = "";
+        document.getElementById("question-list").innerHTML = "";
+        addQuestionField();
+        document.getElementById("custom-modal").classList.add("active");
+      }
+
+      function editSection(index) {
+        editingIndex = index;
+        const section = customQuestions[index];
+        document.getElementById("modal-title").textContent =
+          "Edit Question Set";
+        document.getElementById("section-title").value = section.title;
+        document.getElementById("section-icon").value = section.icon;
+
+        const questionList = document.getElementById("question-list");
+        questionList.innerHTML = "";
+        section.questions.forEach((q) => addQuestionField(q));
+
+        document.getElementById("custom-modal").classList.add("active");
+      }
+
+      function deleteSection(index) {
+        if (confirm("Are you sure you want to delete this question set?")) {
+          customQuestions.splice(index, 1);
+          localStorage.setItem(
+            "customQuestions",
+            JSON.stringify(customQuestions)
+          );
+          renderCustomQuestionSets();
+          renderCustomQuestions();
+        }
+      }
+
+      function addQuestionField(value = "") {
+        const questionList = document.getElementById("question-list");
+        const questionDiv = document.createElement("div");
+        questionDiv.className = "question-item";
+        questionDiv.innerHTML = `
+          <input type="text" class="form-input" placeholder="Enter question" value="${value}" style="flex: 1; margin-right: 10px;">
+          <button class="btn-small btn-delete" onclick="this.parentElement.remove()">Remove</button>
+        `;
+        questionList.appendChild(questionDiv);
+      }
+
+      function closeModal() {
+        document.getElementById("custom-modal").classList.remove("active");
+      }
+
+      function saveCustomSection() {
+        const title = document.getElementById("section-title").value.trim();
+        const icon =
+          document.getElementById("section-icon").value.trim() || "📝";
+        const questionInputs = document.querySelectorAll(
+          "#question-list input"
+        );
+        const questions = Array.from(questionInputs)
+          .map((input) => input.value.trim())
+          .filter((q) => q.length > 0);
+
+        if (!title) {
+          alert("Please enter a section title");
+          return;
+        }
+
+        if (questions.length === 0) {
+          alert("Please add at least one question");
+          return;
+        }
+
+        const section = { title, icon, questions };
+
+        if (editingIndex >= 0) {
+          customQuestions[editingIndex] = section;
+        } else {
+          customQuestions.push(section);
+        }
+
+        localStorage.setItem(
+          "customQuestions",
+          JSON.stringify(customQuestions)
+        );
+        closeModal();
+        renderCustomQuestionSets();
+        renderCustomQuestions();
+      }
+
+      function renderCustomQuestions() {
+        const questionsSection = document.querySelector(".questions-section");
+
+        // Remove existing custom sections
+        document
+          .querySelectorAll(".custom-questions-content")
+          .forEach((el) => el.remove());
+        document
+          .querySelectorAll(".custom-tab-btn")
+          .forEach((el) => el.remove());
+
+        if (customQuestions.length === 0) return;
+
+        // Add tabs for custom questions
+        const tabsContainer = document.querySelector(".questions-tabs");
+        customQuestions.forEach((section, index) => {
+          const tabBtn = document.createElement("button");
+          tabBtn.className = "tab-btn custom-tab-btn";
+          tabBtn.onclick = () => switchTab(`custom-${index}`);
+          tabBtn.innerHTML = `<span class="icon">${section.icon}</span>${section.title}`;
+          tabsContainer.appendChild(tabBtn);
+        });
+
+        // Add content for custom questions
+        customQuestions.forEach((section, index) => {
+          const contentDiv = document.createElement("div");
+          contentDiv.className = "questions-content custom-questions-content";
+          contentDiv.id = `custom-${index}-questions`;
+
+          let html = "";
+          section.questions.forEach((question, qIndex) => {
+            html += `
+              <div class="question-card">
+                <div class="question-label">${qIndex + 1}. ${question}</div>
+                <textarea id="custom-${index}-q${
+              qIndex + 1
+            }" placeholder="Write your answer here..."></textarea>
+              </div>
+            `;
+          });
+
+          html += `
+            <button class="submit-btn" onclick="submitCustomAnswers(${index})">
+              Submit ${section.title} Reflection
+            </button>
+            <div class="status-message" id="custom-${index}-status"></div>
+          `;
+
+          contentDiv.innerHTML = html;
+          questionsSection.appendChild(contentDiv);
+        });
+      }
+
+      function submitCustomAnswers(sectionIndex) {
+        const dateKey = getTodayDateKey();
+        const section = customQuestions[sectionIndex];
+        const answers = {};
+        let allFilled = true;
+
+        section.questions.forEach((q, qIndex) => {
+          const textarea = document.getElementById(
+            `custom-${sectionIndex}-q${qIndex + 1}`
+          );
+          answers[`q${qIndex + 1}`] = textarea.value.trim();
+          if (!answers[`q${qIndex + 1}`]) {
+            allFilled = false;
+          }
+        });
+
+        if (!allFilled) {
+          const confirmed = confirm(
+            "Some questions are not answered. Do you want to save anyway?"
+          );
+          if (!confirmed) return;
+        }
+
+        // Save to storage
+        if (!reflectionData[dateKey]) {
+          reflectionData[dateKey] = {};
+        }
+        reflectionData[dateKey][`custom_${sectionIndex}`] = answers;
+        reflectionData[dateKey][`custom_${sectionIndex}_timestamp`] =
+          new Date().toISOString();
+        reflectionData[dateKey][`custom_${sectionIndex}_title`] = section.title;
+        reflectionData[dateKey][`custom_${sectionIndex}_icon`] = section.icon;
+
+        localStorage.setItem("reflectionData", JSON.stringify(reflectionData));
+
+        // Show success message
+        const statusDiv = document.getElementById(
+          `custom-${sectionIndex}-status`
+        );
+        statusDiv.className = "status-message success";
+        statusDiv.textContent = `✓ ${section.title} reflection saved successfully!`;
+        statusDiv.style.display = "block";
+
+        setTimeout(() => {
+          statusDiv.style.display = "none";
+        }, 3000);
+
+        // Refresh calendars
+        renderADCalendar();
+        renderNepaliCalendar();
       }
 
       // Initialize on load
