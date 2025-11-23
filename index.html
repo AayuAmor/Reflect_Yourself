@@ -1878,12 +1878,12 @@
         }
 
         if (!allFilled) {
-          const confirmed = await customConfirm(
-            "Some questions are not answered. Do you want to save anyway?",
+          await customAlert(
+            "Please answer all questions before submitting.",
             "Incomplete Answers",
             "⚠️"
           );
-          if (!confirmed) return;
+          return;
         }
 
         // Save to storage
