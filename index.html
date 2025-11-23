@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reflect Yourself - Daily Reflection Journal</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 3px solid #667eea;
+      }
+
+      h1 {
+        color: #667eea;
+        font-size: 2.5em;
+        margin-bottom: 10px;
+      }
+
+      .subtitle {
+        color: #666;
+        font-size: 1.1em;
+      }
+
+      .calendars-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 40px;
+      }
+
+      .calendar-container {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .calendar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .calendar-title {
+        font-size: 1.5em;
+        color: #333;
+        font-weight: bold;
+      }
+
+      .calendar-nav {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .nav-btn {
+        background: #667eea;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1em;
+        transition: background 0.3s;
+      }
+
+      .nav-btn:hover {
+        background: #5568d3;
+      }
+
+      .month-year {
+        font-weight: bold;
+        color: #667eea;
+        min-width: 150px;
+        text-align: center;
+      }
+
+      .calendar {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 8px;
+      }
+
+      .day-header {
+        text-align: center;
+        font-weight: bold;
+        color: #667eea;
+        padding: 10px;
+        font-size: 0.9em;
+      }
+
+      .day {
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s;
+        position: relative;
+      }
+
+      .day:hover {
+        transform: scale(1.1);
+      }
+
+      .day.other-month {
+        color: #ccc;
+      }
+
+      .day.today {
+        background: #667eea;
+        color: white;
+        font-weight: bold;
+      }
+
+      .day.complete {
+        background: #28a745;
+        color: white;
+      }
+
+      .day.incomplete {
+        background: #dc3545;
+        color: white;
+      }
+
+      .day.partial {
+        background: #ffc107;
+        color: white;
+      }
+
+      .questions-section {
+        margin-top: 40px;
+      }
+
+      .questions-tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .tab-btn {
+        flex: 1;
+        padding: 15px;
+        border: none;
+        background: #e9ecef;
+        color: #666;
+        font-size: 1.1em;
+        font-weight: bold;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .tab-btn.active {
+        background: #667eea;
+        color: white;
+      }
+
+      .tab-btn .icon {
+        font-size: 1.5em;
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      .questions-content {
+        display: none;
+      }
+
+      .questions-content.active {
+        display: block;
+      }
+
+      .question-card {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        border-left: 4px solid #667eea;
+      }
+
+      .question-label {
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 1.05em;
+      }
+
+      textarea {
+        width: 100%;
+        min-height: 100px;
+        padding: 12px;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 1em;
+        resize: vertical;
+        transition: border-color 0.3s;
+      }
+
+      textarea:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      .submit-btn {
+        background: #28a745;
+        color: white;
+        border: none;
+        padding: 15px 40px;
+        border-radius: 10px;
+        font-size: 1.1em;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: block;
+        margin: 20px auto 0;
+      }
+
+      .submit-btn:hover {
+        background: #218838;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+      }
+
+      .submit-btn:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .status-message {
+        text-align: center;
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 20px;
+        font-weight: bold;
+        display: none;
+      }
+
+      .status-message.success {
+        background: #d4edda;
+        color: #155724;
+        display: block;
+      }
+
+      .status-message.error {
+        background: #f8d7da;
+        color: #721c24;
+        display: block;
+      }
+
+      .legend {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .legend-color {
+        width: 20px;
+        height: 20px;
+        border-radius: 5px;
+      }
+
+      .selected-date-info {
+        text-align: center;
+        padding: 15px;
+        background: #e7f3ff;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        font-size: 1.1em;
+        color: #004085;
+      }
+
+      @media (max-width: 968px) {
+        .calendars-section {
+          grid-template-columns: 1fr;
+        }
+
+        h1 {
+          font-size: 2em;
+        }
+
+        .calendar {
+          gap: 5px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>🌟 Reflect Yourself 🌟</h1>
+        <p class="subtitle">Daily Reflection & Gratitude Journal</p>
+      </header>
+
+      <!-- Calendars Section -->
+      <div class="calendars-section">
+        <!-- AD Calendar -->
+        <div class="calendar-container">
+          <div class="calendar-header">
+            <h2 class="calendar-title">📅 AD Calendar</h2>
+            <div class="calendar-nav">
+              <button class="nav-btn" onclick="changeMonth('ad', -1)">◀</button>
+              <span class="month-year" id="ad-month-year"></span>
+              <button class="nav-btn" onclick="changeMonth('ad', 1)">▶</button>
+            </div>
+          </div>
+          <div class="calendar" id="ad-calendar"></div>
+        </div>
+
+        <!-- Nepali Calendar -->
+        <div class="calendar-container">
+          <div class="calendar-header">
+            <h2 class="calendar-title">🗓️ Nepali Calendar</h2>
+            <div class="calendar-nav">
+              <button class="nav-btn" onclick="changeMonth('nepali', -1)">
+                ◀
+              </button>
+              <span class="month-year" id="nepali-month-year"></span>
+              <button class="nav-btn" onclick="changeMonth('nepali', 1)">
+                ▶
+              </button>
+            </div>
+          </div>
+          <div class="calendar" id="nepali-calendar"></div>
+        </div>
+      </div>
+
+      <!-- Legend -->
+      <div class="legend">
+        <div class="legend-item">
+          <div class="legend-color" style="background: #28a745"></div>
+          <span>Complete (Both)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #ffc107"></div>
+          <span>Partial (One)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #dc3545"></div>
+          <span>Incomplete</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #667eea"></div>
+          <span>Today</span>
+        </div>
+      </div>
+
+      <!-- Questions Section -->
+      <div class="questions-section">
+        <div class="selected-date-info" id="selected-date-info">
+          Select a date to answer questions
+        </div>
+
+        <div class="questions-tabs">
+          <button class="tab-btn active" onclick="switchTab('morning')">
+            <span class="icon">☀️</span>
+            Morning Questions
+          </button>
+          <button class="tab-btn" onclick="switchTab('evening')">
+            <span class="icon">🌙</span>
+            Evening Questions
+          </button>
+        </div>
+
+        <!-- Morning Questions -->
+        <div class="questions-content active" id="morning-questions">
+          <div class="question-card">
+            <div class="question-label">1. What is the main task today?</div>
+            <textarea
+              id="morning-q1"
+              placeholder="Write your answer here..."
+            ></textarea>
+          </div>
+          <div class="question-card">
+            <div class="question-label">
+              2. What am I going to give myself today?
+            </div>
+            <textarea
+              id="morning-q2"
+              placeholder="Write your answer here..."
+            ></textarea>
+          </div>
+          <div class="question-card">
+            <div class="question-label">
+              3. What am I going to give others today?
+            </div>
+            <textarea
+              id="morning-q3"
+              placeholder="Write your answer here..."
+            ></textarea>
+          </div>
+          <div class="question-card">
+            <div class="question-label">
+              4. What am I happy about right now?
+            </div>
+            <textarea
+              id="morning-q4"
+              placeholder="Write your answer here..."
+            ></textarea>
+          </div>
+          <div class="question-card">
+            <div class="question-label">
+              5. What are 10 things that I am grateful for in life?
+            </div>
+            <textarea
+              id="morning-q5"
+              placeholder="Write your answer here..."
+            ></textarea>
+          </div>
+          <div class="question-card">
+            <div class="question-label">
+              6. For what and for whom am I grateful in life?
+            </div>
+            <textarea
+              id="morning-q6"
+              placeholder="Write your answer here..."
+            ></textarea>
+          </div>
+          <div class="question-card">
+            <div class="question-label">
+              7. How can I increase my productivity today?
+            </div>
+            <textarea
+              id="morning-q7"
+              placeholder="Write your answer here..."
+            ></textarea>
+          </div>
+          <button class="submit-btn" onclick="submitAnswers('morning')">
+            Submit Morning Reflection
+          </button>
+          <div class="status-message" id="morning-status"></div>
+        </div>
+
+        <!-- Evening Questions -->
+        <div class="questions-content" id="evening-questions">
+          <div class="question-card">
+            <div class="question-label">
+              1. What did I do today to move closer to my aim or goal?
+            </div>
+            <textarea
+              id="evening-q1"
+              placeholder="Write your answer here..."
+            ></textarea>
+          </div>
+          <div class="question-card">
+            <div class="question-label">
+              2. Did my actions reflect my priorities or excuses?
+            </div>
+            <textarea
+              id="evening-q2"
+              placeholder="Write your answer here..."
+            ></textarea>
+          </div>
+          <div class="question-card">
+            <div class="question-label">
+              3. Where did I waste my energy or get distracted?
+            </div>
+            <textarea
+              id="evening-q3"
+              placeholder="Write your answer here..."
+            ></textarea>
+          </div>
+          <div class="question-card">
+            <div class="question-label">
+              4. If every day looked like today, would I hit my goal?
+            </div>
+            <textarea
+              id="evening-q4"
+              placeholder="Write your answer here..."
+            ></textarea>
+          </div>
+          <div class="question-card">
+            <div class="question-label">5. Where am I winning in my life?</div>
+            <textarea
+              id="evening-q5"
+              placeholder="Write your answer here..."
+            ></textarea>
+          </div>
+          <button class="submit-btn" onclick="submitAnswers('evening')">
+            Submit Evening Reflection
+          </button>
+          <div class="status-message" id="evening-status"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Nepali Calendar Data (BS)
+      const nepaliMonths = [
+        "Baisakh",
+        "Jestha",
+        "Ashadh",
+        "Shrawan",
+        "Bhadra",
+        "Ashwin",
+        "Kartik",
+        "Mangsir",
+        "Poush",
+        "Magh",
+        "Falgun",
+        "Chaitra",
+      ];
+
+      // Nepali calendar days per month for years 2080-2085
+      const nepaliCalendarData = {
+        2080: [31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
+        2081: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+        2082: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+        2083: [30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
+        2084: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+        2085: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+      };
+
+      // State
+      let currentADDate = new Date();
+      let currentNepaliDate = adToNepali(currentADDate);
+      let selectedDate = null;
+      let reflectionData =
+        JSON.parse(localStorage.getItem("reflectionData")) || {};
+
+      // Initialize
+      function init() {
+        renderADCalendar();
+        renderNepaliCalendar();
+        updateSelectedDateInfo();
+      }
+
+      // AD Calendar
+      function renderADCalendar() {
+        const calendar = document.getElementById("ad-calendar");
+        const year = currentADDate.getFullYear();
+        const month = currentADDate.getMonth();
+
+        const monthNames = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+        document.getElementById(
+          "ad-month-year"
+        ).textContent = `${monthNames[month]} ${year}`;
+
+        calendar.innerHTML = "";
+
+        // Day headers
+        const dayHeaders = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        dayHeaders.forEach((day) => {
+          const header = document.createElement("div");
+          header.className = "day-header";
+          header.textContent = day;
+          calendar.appendChild(header);
+        });
+
+        // First day of month and total days
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const prevMonthDays = new Date(year, month, 0).getDate();
+
+        // Previous month days
+        for (let i = firstDay - 1; i >= 0; i--) {
+          const day = document.createElement("div");
+          day.className = "day other-month";
+          day.textContent = prevMonthDays - i;
+          calendar.appendChild(day);
+        }
+
+        // Current month days
+        for (let i = 1; i <= daysInMonth; i++) {
+          const day = document.createElement("div");
+          day.className = "day";
+          day.textContent = i;
+
+          const dateKey = `${year}-${String(month + 1).padStart(
+            2,
+            "0"
+          )}-${String(i).padStart(2, "0")}`;
+          const today = new Date();
+          const isToday =
+            year === today.getFullYear() &&
+            month === today.getMonth() &&
+            i === today.getDate();
+
+          if (isToday) {
+            day.classList.add("today");
+          }
+
+          // Check completion status
+          const status = getDateStatus(dateKey);
+          if (status === "complete") {
+            day.classList.add("complete");
+          } else if (status === "partial") {
+            day.classList.add("partial");
+          } else if (status === "incomplete") {
+            const dayDate = new Date(year, month, i);
+            if (dayDate < today) {
+              day.classList.add("incomplete");
+            }
+          }
+
+          day.onclick = () => selectDate(dateKey);
+          calendar.appendChild(day);
+        }
+
+        // Next month days
+        const remainingCells = 42 - (firstDay + daysInMonth);
+        for (let i = 1; i <= remainingCells; i++) {
+          const day = document.createElement("div");
+          day.className = "day other-month";
+          day.textContent = i;
+          calendar.appendChild(day);
+        }
+      }
+
+      // Nepali Calendar
+      function renderNepaliCalendar() {
+        const calendar = document.getElementById("nepali-calendar");
+        const year = currentNepaliDate.year;
+        const month = currentNepaliDate.month;
+
+        document.getElementById(
+          "nepali-month-year"
+        ).textContent = `${nepaliMonths[month]} ${year}`;
+
+        calendar.innerHTML = "";
+
+        // Day headers
+        const dayHeaders = [
+          "आइत",
+          "सोम",
+          "मंगल",
+          "बुध",
+          "बिहि",
+          "शुक्र",
+          "शनि",
+        ];
+        dayHeaders.forEach((day) => {
+          const header = document.createElement("div");
+          header.className = "day-header";
+          header.textContent = day;
+          calendar.appendChild(header);
+        });
+
+        // Calculate first day of Nepali month
+        const firstDayAD = nepaliToAD(year, month, 1);
+        const firstDay = firstDayAD.getDay();
+
+        const daysInMonth = nepaliCalendarData[year]?.[month] || 30;
+        const prevMonthDays =
+          month > 0
+            ? nepaliCalendarData[year]?.[month - 1] || 30
+            : nepaliCalendarData[year - 1]?.[11] || 30;
+
+        // Previous month days
+        for (let i = firstDay - 1; i >= 0; i--) {
+          const day = document.createElement("div");
+          day.className = "day other-month";
+          day.textContent = prevMonthDays - i;
+          calendar.appendChild(day);
+        }
+
+        // Current month days
+        const todayNepali = adToNepali(new Date());
+        for (let i = 1; i <= daysInMonth; i++) {
+          const day = document.createElement("div");
+          day.className = "day";
+          day.textContent = i;
+
+          const isToday =
+            year === todayNepali.year &&
+            month === todayNepali.month &&
+            i === todayNepali.day;
+          if (isToday) {
+            day.classList.add("today");
+          }
+
+          // Get corresponding AD date for status check
+          const adDate = nepaliToAD(year, month, i);
+          const dateKey = `${adDate.getFullYear()}-${String(
+            adDate.getMonth() + 1
+          ).padStart(2, "0")}-${String(adDate.getDate()).padStart(2, "0")}`;
+
+          const status = getDateStatus(dateKey);
+          if (status === "complete") {
+            day.classList.add("complete");
+          } else if (status === "partial") {
+            day.classList.add("partial");
+          } else if (status === "incomplete") {
+            if (adDate < new Date()) {
+              day.classList.add("incomplete");
+            }
+          }
+
+          day.onclick = () => selectDate(dateKey);
+          calendar.appendChild(day);
+        }
+
+        // Next month days
+        const remainingCells = 42 - (firstDay + daysInMonth);
+        for (let i = 1; i <= remainingCells; i++) {
+          const day = document.createElement("div");
+          day.className = "day other-month";
+          day.textContent = i;
+          calendar.appendChild(day);
+        }
+      }
+
+      // Date conversion functions (simplified)
+      function adToNepali(adDate) {
+        // Base date: 2024-04-13 = 2081-01-01
+        const baseAD = new Date(2024, 3, 13);
+        const baseNepali = { year: 2081, month: 0, day: 1 };
+
+        const diffTime = adDate - baseAD;
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+        let year = baseNepali.year;
+        let month = baseNepali.month;
+        let day = baseNepali.day + diffDays;
+
+        while (day > (nepaliCalendarData[year]?.[month] || 30)) {
+          day -= nepaliCalendarData[year]?.[month] || 30;
+          month++;
+          if (month > 11) {
+            month = 0;
+            year++;
+          }
+        }
+
+        while (day < 1) {
+          month--;
+          if (month < 0) {
+            month = 11;
+            year--;
+          }
+          day += nepaliCalendarData[year]?.[month] || 30;
+        }
+
+        return { year, month, day };
+      }
+
+      function nepaliToAD(year, month, day) {
+        // Base date: 2081-01-01 = 2024-04-13
+        const baseAD = new Date(2024, 3, 13);
+        const baseNepali = { year: 2081, month: 0, day: 1 };
+
+        let totalDays = 0;
+
+        // Add days for complete years
+        for (let y = baseNepali.year; y < year; y++) {
+          totalDays += (nepaliCalendarData[y] || []).reduce(
+            (a, b) => a + b,
+            365
+          );
+        }
+
+        // Add days for complete months in current year
+        for (let m = 0; m < month; m++) {
+          totalDays += nepaliCalendarData[year]?.[m] || 30;
+        }
+
+        // Add remaining days
+        totalDays += day - baseNepali.day;
+
+        const result = new Date(baseAD);
+        result.setDate(result.getDate() + totalDays);
+        return result;
+      }
+
+      // Navigation
+      function changeMonth(calendar, direction) {
+        if (calendar === "ad") {
+          currentADDate.setMonth(currentADDate.getMonth() + direction);
+          renderADCalendar();
+        } else {
+          currentNepaliDate.month += direction;
+          if (currentNepaliDate.month > 11) {
+            currentNepaliDate.month = 0;
+            currentNepaliDate.year++;
+          } else if (currentNepaliDate.month < 0) {
+            currentNepaliDate.month = 11;
+            currentNepaliDate.year--;
+          }
+          renderNepaliCalendar();
+        }
+      }
+
+      // Date selection
+      function selectDate(dateKey) {
+        selectedDate = dateKey;
+        updateSelectedDateInfo();
+        loadAnswers(dateKey);
+      }
+
+      function updateSelectedDateInfo() {
+        const info = document.getElementById("selected-date-info");
+        if (selectedDate) {
+          const date = new Date(selectedDate);
+          const options = {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          };
+          const nepaliDate = adToNepali(date);
+          info.textContent = `Selected: ${date.toLocaleDateString(
+            "en-US",
+            options
+          )} | ${nepaliMonths[nepaliDate.month]} ${nepaliDate.day}, ${
+            nepaliDate.year
+          }`;
+        } else {
+          info.textContent = "Select a date to answer questions";
+        }
+      }
+
+      // Tab switching
+      function switchTab(tab) {
+        document
+          .querySelectorAll(".tab-btn")
+          .forEach((btn) => btn.classList.remove("active"));
+        document
+          .querySelectorAll(".questions-content")
+          .forEach((content) => content.classList.remove("active"));
+
+        event.target.closest(".tab-btn").classList.add("active");
+        document.getElementById(`${tab}-questions`).classList.add("active");
+      }
+
+      // Load answers
+      function loadAnswers(dateKey) {
+        const data = reflectionData[dateKey] || {};
+
+        // Load morning answers
+        for (let i = 1; i <= 7; i++) {
+          const textarea = document.getElementById(`morning-q${i}`);
+          textarea.value = data.morning?.[`q${i}`] || "";
+        }
+
+        // Load evening answers
+        for (let i = 1; i <= 5; i++) {
+          const textarea = document.getElementById(`evening-q${i}`);
+          textarea.value = data.evening?.[`q${i}`] || "";
+        }
+
+        // Clear status messages
+        document.getElementById("morning-status").style.display = "none";
+        document.getElementById("evening-status").style.display = "none";
+      }
+
+      // Submit answers
+      function submitAnswers(type) {
+        if (!selectedDate) {
+          alert("Please select a date first!");
+          return;
+        }
+
+        const numQuestions = type === "morning" ? 7 : 5;
+        const answers = {};
+        let allFilled = true;
+
+        for (let i = 1; i <= numQuestions; i++) {
+          const textarea = document.getElementById(`${type}-q${i}`);
+          answers[`q${i}`] = textarea.value.trim();
+          if (!answers[`q${i}`]) {
+            allFilled = false;
+          }
+        }
+
+        if (!allFilled) {
+          const confirmed = confirm(
+            "Some questions are not answered. Do you want to save anyway?"
+          );
+          if (!confirmed) return;
+        }
+
+        // Save to storage
+        if (!reflectionData[selectedDate]) {
+          reflectionData[selectedDate] = {};
+        }
+        reflectionData[selectedDate][type] = answers;
+        reflectionData[selectedDate][`${type}Timestamp`] =
+          new Date().toISOString();
+
+        localStorage.setItem("reflectionData", JSON.stringify(reflectionData));
+
+        // Show success message
+        const statusDiv = document.getElementById(`${type}-status`);
+        statusDiv.className = "status-message success";
+        statusDiv.textContent = `✓ ${
+          type.charAt(0).toUpperCase() + type.slice(1)
+        } reflection saved successfully!`;
+        statusDiv.style.display = "block";
+
+        setTimeout(() => {
+          statusDiv.style.display = "none";
+        }, 3000);
+
+        // Refresh calendars to update status
+        renderADCalendar();
+        renderNepaliCalendar();
+      }
+
+      // Get date status
+      function getDateStatus(dateKey) {
+        const data = reflectionData[dateKey];
+        if (!data) return null;
+
+        const hasMorning =
+          data.morning && Object.values(data.morning).some((v) => v);
+        const hasEvening =
+          data.evening && Object.values(data.evening).some((v) => v);
+
+        if (hasMorning && hasEvening) return "complete";
+        if (hasMorning || hasEvening) return "partial";
+        return null;
+      }
+
+      // Initialize on load
+      init();
+    </script>
+  </body>
+</html>
